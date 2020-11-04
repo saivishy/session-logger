@@ -22,7 +22,7 @@ def stopGlobal():
 	session_time = round((root.global_timer_e-root.global_timer_s),2)
 	print(session_time)
 	session_df = pd.DataFrame({"Answers":answers,"Time":local_times,"Total_Time":local_times})
-	session_df["Total_Time"] = session_time
+	session_df["Total_Time"] = (session_time/60)
 	answer = simpledialog.askstring("Input", "Session Name?",parent=root)
 	session_df.to_csv("session_logs/"+answer+".csv")
 def logQuestion():
@@ -40,6 +40,8 @@ def getOptions():
 	root.local_timer_e = time()
 	print("TIME")
 	local_time = round((root.local_timer_e-root.local_timer_s),2)
+	if local_time>60:
+		local_time=local_time/60
 	local_times.append(local_time)
 	print(local_time)
 	root.local_timer_s = time()
@@ -65,9 +67,9 @@ start_button = Button(root,text="START",command=startGlobal)
 start_button.pack(anchor='w')
 stop_button = Button(root,text="STOP",command=stopGlobal)
 stop_button.pack(anchor='w')	
-list_button = Listbox(root, selectmode = "multiple",height=5)
+list_button = Listbox(root, selectmode = "multiple",height=7)
 list_button.pack(anchor='e') 
-options = ["A","B","C","D","E"]
+options = ["A","B","C","D","E","F","NumEntry"]
 for each_item in range(len(options)): 
     list_button.insert('end', options[each_item]) 
   
@@ -77,5 +79,4 @@ submit.pack(anchor="e")
 print(root.qitr)
 root.mainloop()
 print(var)
-
 
